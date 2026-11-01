@@ -72,6 +72,32 @@
       isolation: isolate;
     }
 
+    .site-nav {
+      position: absolute;
+      z-index: 1;
+      top: 24px;
+      right: clamp(22px, 6vw, 48px);
+      display: flex;
+      gap: 5px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(12, 13, 26, .56);
+      backdrop-filter: blur(12px);
+    }
+    .site-nav a {
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #aaa9c3;
+      font-size: .82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .2s ease, background .2s ease;
+    }
+    .site-nav a:hover, .site-nav a:focus-visible { color: var(--ink); background: rgba(255,255,255,.1); }
+    .site-nav a:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+    .site-nav a[aria-current="page"] { color: #f5d0fe; background: rgba(192,132,252,.16); }
+
     main::before {
       position: absolute;
       z-index: -1;
@@ -198,6 +224,11 @@
   <div class="stars" aria-hidden="true"></div>
   <div class="scene">
     <main>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
       <p class="eyebrow"><span class="sparkle" aria-hidden="true">✦</span> A tiny beginning</p>
       <h1>Hello,<span>world.</span></h1>
       <p class="intro">One small phrase, a whole universe of possibility. Here’s to whatever you make next.</p>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b16">
+  <title>Contact — A little moment of magic</title>
+  <style>
+    :root { color-scheme:dark; --ink:#f7f5ff; --muted:#aaa9c3; --pink:#f0abfc; --line:rgba(255,255,255,.13); }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; display:grid; place-items:center; padding:28px; color:var(--ink); background:radial-gradient(ellipse at 18% 18%,rgba(112,77,214,.25),transparent 38%),radial-gradient(ellipse at 82% 78%,rgba(219,93,196,.17),transparent 34%),#090b16; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .stars,.stars::before,.stars::after { position:fixed; inset:0; pointer-events:none; content:""; background-image:radial-gradient(1px 1px at 20px 30px,rgba(255,255,255,.7) 98%,transparent),radial-gradient(1px 1px at 140px 90px,rgba(255,255,255,.48) 98%,transparent),radial-gradient(1.5px 1.5px at 80px 170px,rgba(255,255,255,.6) 98%,transparent); background-size:220px 220px; opacity:.32; animation:drift 55s linear infinite; }
+    .stars::before { transform:scale(1.7); opacity:.45; animation-duration:85s; } .stars::after { transform:scale(2.4); opacity:.22; animation-duration:120s; }
+    .scene { position:relative; width:min(100%,760px); padding:1px; border-radius:30px; background:linear-gradient(135deg,rgba(240,171,252,.55),rgba(167,139,250,.12) 42%,rgba(129,140,248,.5)); box-shadow:0 30px 100px rgba(0,0,0,.45),0 0 80px rgba(167,139,250,.12); animation:arrive .9s cubic-bezier(.2,.8,.2,1) both; }
+    main { position:relative; overflow:hidden; min-height:490px; padding:clamp(96px,13vw,130px) clamp(30px,8vw,72px) 78px; border-radius:29px; background:linear-gradient(145deg,rgba(23,25,44,.96),rgba(15,16,31,.96)); isolation:isolate; }
+    main::before { position:absolute; z-index:-1; top:-190px; right:-145px; width:430px; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 35%,rgba(240,171,252,.32),rgba(125,92,229,.12) 42%,transparent 70%); filter:blur(3px); content:""; animation:breathe 7s ease-in-out infinite alternate; }
+    .site-nav { position:absolute; z-index:1; top:24px; right:clamp(22px,6vw,48px); display:flex; gap:5px; padding:5px; border:1px solid var(--line); border-radius:999px; background:rgba(12,13,26,.56); backdrop-filter:blur(12px); }
+    .site-nav a { padding:8px 12px; border-radius:999px; color:var(--muted); font-size:.82rem; font-weight:600; text-decoration:none; transition:color .2s ease,background .2s ease; }
+    .site-nav a:hover,.site-nav a:focus-visible { color:var(--ink); background:rgba(255,255,255,.1); } .site-nav a:focus-visible { outline:2px solid var(--pink); outline-offset:2px; } .site-nav a[aria-current="page"] { color:#f5d0fe; background:rgba(192,132,252,.16); }
+    .eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 22px; color:#d7c7ff; font-size:.76rem; font-weight:700; letter-spacing:.17em; text-transform:uppercase; }
+    .sparkle { color:var(--pink); font-size:1rem; filter:drop-shadow(0 0 8px rgba(240,171,252,.8)); }
+    h1 { margin:0; font-size:clamp(3.7rem,11vw,7rem); font-weight:760; letter-spacing:-.075em; line-height:.95; }
+    h1 span { display:block; color:transparent; background:linear-gradient(100deg,#c4b5fd 8%,#f0abfc 52%,#fbcfe8 95%); background-clip:text; -webkit-background-clip:text; }
+    .intro { max-width:490px; margin:25px 0 31px; color:var(--muted); font-size:clamp(1rem,2vw,1.1rem); line-height:1.7; }
+    .contact-card { display:flex; align-items:center; justify-content:space-between; gap:20px; max-width:520px; padding:18px 20px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.04); }
+    .contact-copy strong { display:block; margin-bottom:5px; font-size:.92rem; }
+    .contact-copy span { color:#9695b0; font-size:.86rem; }
+    .email-link { flex:none; display:inline-flex; align-items:center; gap:9px; padding:12px 16px; border:1px solid rgba(255,255,255,.2); border-radius:999px; color:#20172d; background:linear-gradient(100deg,#d8b4fe,#f5b7e9); font-size:.86rem; font-weight:700; text-decoration:none; transition:transform .2s ease,box-shadow .2s ease; }
+    .email-link:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(209,155,246,.25); }
+    .email-link:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+    .note { max-width:520px; margin:15px 0 0; color:#777891; font-size:.78rem; line-height:1.5; }
+    .footer { position:absolute; right:clamp(30px,8vw,72px); bottom:26px; color:#777891; font-size:.73rem; letter-spacing:.04em; }
+    @keyframes arrive { from { opacity:0; transform:translateY(18px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes drift { to { transform:translate3d(30px,20px,0); } }
+    @keyframes breathe { to { transform:translate(-24px,18px) scale(1.08); opacity:.72; } }
+    @media(max-width:560px) { body { padding:16px; } main { min-height:560px; padding:105px 26px 82px; } .contact-card { align-items:flex-start; flex-direction:column; } .footer { right:26px; bottom:22px; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="scene">
+    <main>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+      <p class="eyebrow"><span class="sparkle" aria-hidden="true">✦</span> Your next hello</p>
+      <h1>Let’s talk<span>ideas.</span></h1>
+      <p class="intro">Have a question, an idea, or just want to say hello? I’d love to hear from you.</p>
+      <div class="contact-card">
+        <div class="contact-copy">
+          <strong>Send a note</strong>
+          <span>Opens a new email in your mail app</span>
+        </div>
+        <a class="email-link" href="mailto:your.email@example.com?subject=Hello">Write an email <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="note">Update the email link in this page with your preferred address.</p>
+      <span class="footer">MADE WITH A LITTLE MAGIC&nbsp; ✧</span>
+    </main>
+  </div>
+</body>
+</html>
